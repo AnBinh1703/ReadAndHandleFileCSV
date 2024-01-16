@@ -14,28 +14,61 @@ namespace ReadAndHandleFileCSV
         public static DataView GetCSVData(string path)
         {
             DataTable dataTable = new DataTable();
-            TextFieldParser parser = new TextFieldParser(path);
-            parser.SetDelimiters(",");
+            dataTable.Columns.Add("Province Code");
+            dataTable.Columns.Add("Test Score");
 
-            if (!parser.EndOfData)
+            using (TextFieldParser parser = new TextFieldParser(path))
             {
-                var columns = parser.ReadFields();
+                parser.SetDelimiters(",");
 
-                foreach (var col in columns)
+                while (!parser.EndOfData)
                 {
-                    dataTable.Columns.Add(col);
+                    string[] fields = parser.ReadFields();
+
+                    if (fields.Length > 0)
+                    {
+                        string provinceCode = fields[0].Substring(0, 2);
+
+                        for (int i = 1; i < fields.Length; i++)
+                        {
+                            string testScore = fields[i];
+                            dataTable.Rows.Add(provinceCode, testScore);
+                        }
+                    }
                 }
             }
 
-            while (!parser.EndOfData)
-            {
-                var row = parser.ReadFields();
-                dataTable.Rows.Add(row);
-            }
-
             return dataTable.DefaultView;
-
         }
-
     }
 }
+// version 1: read data from csv file
+
+/* public static DataView GetCSVData(string path)
+ {
+     DataTable dataTable = new DataTable();
+     TextFieldParser parser = new TextFieldParser(path);
+     parser.SetDelimiters(",");
+
+     if (!parser.EndOfData)
+     {
+         var columns = parser.ReadFields();
+
+         foreach (var col in columns)
+         {
+             dataTable.Columns.Add(col);
+         }
+     }
+
+     while (!parser.EndOfData)
+     {
+         var row = parser.ReadFields();
+         dataTable.Rows.Add(row);
+     }
+
+     return dataTable.DefaultView;
+
+ }
+
+}
+}*/
