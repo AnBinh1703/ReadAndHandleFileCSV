@@ -7,14 +7,24 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Background="AliceBlue" Margin="0,111,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="519*"/>
+            <ColumnDefinition Width="281*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="113*"/>
             <RowDefinition Height="210*"/>
+            <RowDefinition Height="Auto"/>
+            <!-- Add a new row for the province input -->
         </Grid.RowDefinitions>
-        <DataGrid x:Name="CSVDataView"  Grid.RowSpan="2" Margin="10,10,10,47" Background="Beige">
+        <DataGrid x:Name="CSVDataView"  Grid.RowSpan="2" Margin="10,10,10,47" Background="Beige" Grid.ColumnSpan="2">
         </DataGrid>
-        <Button Content="Import CSV" HorizontalAlignment="Left" Margin="702,-64,0,0" VerticalAlignment="Top" Click="Button_ImportCSV"/>
-
-
+        <Button Content="Import CSV" HorizontalAlignment="Left" Margin="183,-64,0,0" VerticalAlignment="Top" Click="Button_ImportCSV" Grid.Column="1"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="246,10,0,10" Grid.ColumnSpan="2">
+            <TextBox x:Name="ProvinceTextBox" Width="200" Margin="5"/>
+            <Button Content="Calculate Average" Click="Button_CalculateAverage"/>
+        </StackPanel>
+        <Label Content="CALCULATOR SCORE " HorizontalAlignment="Left" Margin="197,-81,0,0" VerticalAlignment="Top" Height="53" Width="406" FontWeight="Bold" FontSize="36" Grid.ColumnSpan="2"/>
+        <Button Grid.Column="1" Content="Calculate Average All" HorizontalAlignment="Left" Margin="141,141,0,0" Grid.Row="1" VerticalAlignment="Top" Height="38" Width="130" Click="Button_Calculate_All"/>
     </Grid>
 </Window>
